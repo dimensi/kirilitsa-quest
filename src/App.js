@@ -1,24 +1,30 @@
-import logo from './logo.svg';
 import './App.css';
+import { Block } from 'baseui/block'
+import{ questions } from './questions'
+import { shuffle } from 'lodash';
+
+const gameSettings = {
+  easy: {
+    totalQuestions: 10,
+    time: 10
+  },
+  medium: {
+    totalQuestions: 20,
+    time: 5
+  },
+  hard: {
+    totalQuestions: Infinity,
+    time: 3,
+  },
+}
+
 
 function App() {
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Block>
+      hi
+    </Block>
   );
 }
 
