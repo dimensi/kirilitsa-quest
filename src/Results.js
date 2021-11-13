@@ -1,15 +1,9 @@
 import { useAsync } from "react-use";
 import axios from "axios";
 import { Block } from "baseui/block";
-import { H2, H3, Paragraph1, Paragraph3 } from "baseui/typography";
+import { H3, Paragraph1 } from "baseui/typography";
 import { StyledSpinnerNext } from "baseui/spinner";
 import { ProgressBar } from "baseui/progress-bar";
-
-const plural = (zero, one, two, few, many) => (count) => {
-  const result = new Intl.PluralRules("ru-RU").select(count);
-  const words = { zero, one, two, few, many };
-  return words[result];
-};
 
 export function Results({ answers }) {
   const { loading, value } = useAsync(async () => {
@@ -21,7 +15,7 @@ export function Results({ answers }) {
     return (
       <Block display="flex" alignItems={"center"}>
         <StyledSpinnerNext $as="span" />{" "}
-        <Paragraph1 marginLeft="scale400"> Ван момент плиз!</Paragraph1>
+        <Paragraph1 marginLeft="scale400">Ван момент плиз!</Paragraph1>
       </Block>
     );
   }

@@ -1,6 +1,4 @@
 import "./App.css";
-import { questions } from "./questions";
-import { shuffle } from "lodash";
 import { Block } from "baseui/block";
 import { useStyletron } from "baseui";
 import { H1, Paragraph2 } from "baseui/typography";

@@ -1,14 +1,14 @@
-import { useCallback, useMemo, useState } from "react";
-import { questions } from "./questions";
-import { shuffle } from "lodash";
-import { useBoolean, useList } from "react-use";
-import { RadialProgress } from "react-radial-progress-indicator";
-import { Block } from "baseui/block";
-import { Paragraph1 } from "baseui/typography";
-import { FlexGrid, FlexGridItem } from "baseui/flex-grid";
-import { ButtonGroup } from "baseui/button-group";
-import { Button } from "baseui/button";
-import { ArrowRight } from "baseui/icon";
+import {useMemo, useState} from "react";
+import {questions} from "./questions";
+import {shuffle} from "lodash";
+import {useBoolean, useList} from "react-use";
+import {RadialProgress} from "react-radial-progress-indicator";
+import {Block} from "baseui/block";
+import {Paragraph1} from "baseui/typography";
+import {FlexGrid, FlexGridItem} from "baseui/flex-grid";
+import {ButtonGroup} from "baseui/button-group";
+import {Button} from "baseui/button";
+import {ArrowRight} from "baseui/icon";
 
 const prepareAnswers = (questions, answers) =>
   questions.map(({ question }, idx) => ({ question, answer: answers[idx] }));
@@ -22,7 +22,7 @@ export function Game({ gameMode: { totalQuestions, time }, onDone }) {
   const [currentQuestion, setNextQuestion] = useState(items[0]);
   const [isDone, setDone] = useBoolean(false);
   const [answers, answersApi] = useList([]);
-  
+
   const handleAnswer = (answer) => {
     if (isDone) return;
     answersApi.push(answer);
