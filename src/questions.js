@@ -41,7 +41,7 @@ export const questions = [
   },
   {
     question: "Антон Машошин",
-    variants: ["Anton Mashoshin"],
+    variants: ["Anton Mashoshin", "Anton Masoshin", "Anton Mashosin"],
   },
   {
     question: "Дарья Голубева",
@@ -69,7 +69,7 @@ export const questions = [
   },
   {
     question: "Егор Половинкин",
-    variants: ["Egor Polovinkin"],
+    variants: ["Egor Polovinkin", "Igor Polovinkin", "Polovinkin Egor"],
   },
   {
     question: "Игорь Буруля",
@@ -77,19 +77,19 @@ export const questions = [
   },
   {
     question: "Игорь Дизгинжили",
-    variants: ["Igor Dizginzhili"],
+    variants: ["Igor Dizginzhili", "Igor Dizginjili"],
   },
   {
     question: "Иван Брякунов",
-    variants: ["Ivan Bryakunov"],
+    variants: ["Ivan Bryakunov", "Bryakunov Ivan"],
   },
   {
     question: "Кирилл Столяров",
-    variants: ["Kirill Stolyarov"],
+    variants: ["Kirill Stolyarov", "Stolyarov Kirill"],
   },
   {
     question: "Константин Грушин",
-    variants: ["Konstantin Grushin"],
+    variants: ["Konstantin Grushin", "Konstantin Grusin"],
   },
   {
     question: "Максим Алехнович",
@@ -146,7 +146,7 @@ export const questions = [
   },
   {
     question: "Павел Андреев",
-    variants: ["Pavel Andreev"],
+    variants: ["Pavel Andreev", "Pavel Andreiv"],
   },
   {
     question: "Паша Старовойтов",

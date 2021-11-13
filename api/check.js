@@ -181,7 +181,7 @@ const questions = [
   },
 ];
 
-export default function HandleResponse(req, res) {
+export default function handler(req, res) {
   if (!Array.isArray(req.body)) {
     res.status(400).body("Wrong type");
     return;

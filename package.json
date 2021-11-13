@@ -12,9 +12,12 @@
     "axios": "^0.24.0",
     "baseui": "^10.5.0",
     "lodash": "^4.17.21",
+    "prettier": "^2.4.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-radial-progress-indicator": "^1.4.1",
     "react-scripts": "4.0.3",
+    "react-use": "^17.3.1",
     "styletron-engine-atomic": "^1.4.8",
     "styletron-react": "^6.0.2",
     "web-vitals": "^1.0.1"
