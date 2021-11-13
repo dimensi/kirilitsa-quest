@@ -19,7 +19,7 @@ const gameSettings = {
     time: 10,
   },
   hard: {
-    totalQuestions: Infinity,
+    totalQuestions: 45,
     time: 5,
   },
 };
