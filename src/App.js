@@ -33,7 +33,7 @@ const modes = [
   {
     key: "medium",
     name: "Средний",
-    description: `${gameSettings.hard.totalQuestions} вопросов, ${gameSettings.hard.time} секунд на ответ`,
+    description: `${gameSettings.medium.totalQuestions} вопросов, ${gameSettings.medium.time} секунд на ответ`,
   },
   {
     key: "hard",
