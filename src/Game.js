@@ -1,7 +1,7 @@
 import {useMemo, useState} from "react";
 import {questions} from "./questions";
 import {shuffle} from "lodash";
-import {useBoolean, useList} from "react-use";
+import {useList} from "react-use";
 import {RadialProgress} from "react-radial-progress-indicator";
 import {Block} from "baseui/block";
 import {Paragraph1} from "baseui/typography";
@@ -16,23 +16,18 @@ const prepareAnswers = (questions, answers) =>
 export function Game({ gameMode: { totalQuestions, time }, onDone }) {
   const items = useMemo(
     () =>
-      [questions[0]].concat(shuffle(questions).slice(0, totalQuestions - 1)),
+      [questions[0]].concat(shuffle(questions.slice(1, totalQuestions))),
     [totalQuestions]
   );
-  const [currentQuestion, setNextQuestion] = useState(items[0]);
-  const [isDone, setDone] = useBoolean(false);
+  const [currentIndex, setNextIndex] = useState(0);
   const [answers, answersApi] = useList([]);
-
+  const currentQuestion = items[currentIndex]
   const handleAnswer = (answer) => {
-    if (isDone) return;
     answersApi.push(answer);
-    const nextQuestion =
-      items[items.findIndex((item) => currentQuestion === item) + 1];
-    if (nextQuestion) {
-      setNextQuestion(nextQuestion);
-    } else {
-      setDone();
+    if (currentIndex === totalQuestions - 1) {
       onDone(prepareAnswers(items, answers.concat(answer)));
+    } else {
+      setNextIndex(prev => prev + 1);
     }
   };
 
@@ -48,9 +43,8 @@ export function Game({ gameMode: { totalQuestions, time }, onDone }) {
         <FlexGridItem>
           <Paragraph1>{currentQuestion.question} это —</Paragraph1>
         </FlexGridItem>
-        {!isDone && (
-          <FlexGridItem justifyContent={"right"} display={"flex"}>
-            <RadialProgress
+        <FlexGridItem justifyContent={"right"} display={"flex"}>
+          <RadialProgress
               key={currentQuestion.question}
               backgroundColour="#dff0d8"
               backgroundTransparent
@@ -71,9 +65,8 @@ export function Game({ gameMode: { totalQuestions, time }, onDone }) {
                 return (Math.floor(steps * percentage * 10) / 10).toFixed(1);
               }}
               width={50}
-            />
-          </FlexGridItem>
-        )}
+          />
+        </FlexGridItem>
       </FlexGrid>
       <ButtonGroup
         overrides={{
