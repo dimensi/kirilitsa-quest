@@ -12,15 +12,15 @@ import { Results } from "./Results";
 const gameSettings = {
   easy: {
     totalQuestions: 10,
-    time: 10,
+    time: 15,
   },
   medium: {
     totalQuestions: 20,
-    time: 5,
+    time: 10,
   },
   hard: {
     totalQuestions: Infinity,
-    time: 3,
+    time: 5,
   },
 };
 
@@ -28,17 +28,17 @@ const modes = [
   {
     key: "easy",
     name: "Легкий",
-    description: "10 вопросов, 10 секунд на ответ",
+    description: `${gameSettings.easy.totalQuestions} вопросов, ${gameSettings.easy.time} секунд на ответ`,
   },
   {
     key: "medium",
     name: "Средний",
-    description: "20 вопросов, 5 секунд на ответ",
+    description: `${gameSettings.hard.totalQuestions} вопросов, ${gameSettings.hard.time} секунд на ответ`,
   },
   {
     key: "hard",
     name: "Сложный",
-    description: "45 вопросов, 3 секунды на ответ",
+    description: `${gameSettings.hard.totalQuestions} вопросов, ${gameSettings.hard.time} секунд на ответ`,
   },
 ];
 
