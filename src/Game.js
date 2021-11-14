@@ -73,7 +73,7 @@ export function Game({ gameMode: { totalQuestions, time }, onDone }) {
           Root: {
             style: () => ({
               flexDirection: "column",
-              width: "60%",
+              maxWidth: "350px",
               rowGap: "10px",
             }),
           },

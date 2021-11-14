@@ -12,15 +12,15 @@ import { Results } from "./Results";
 const gameSettings = {
   easy: {
     totalQuestions: 10,
-    time: 15,
+    time: 30,
   },
   medium: {
     totalQuestions: 20,
-    time: 10,
+    time: 25,
   },
   hard: {
     totalQuestions: 45,
-    time: 5,
+    time: 20,
   },
 };
 
@@ -55,7 +55,7 @@ function App() {
     width: "600px",
   });
 
-  const [gameMode, setGameMode] = useState(null);
+  const [gameMode, setGameMode] = useState('medium');
   const [gameIsStart, startGame] = useBoolean(false);
   const [answers, setAnswers] = useState(null);
   const handleSubmit = useCallback(
