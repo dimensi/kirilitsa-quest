@@ -112,7 +112,7 @@ function App() {
             </Paragraph2>
             <Paragraph2>
               Есть <b>квиз</b> - выбрать правильный вариант ответа. <br />
-              Есть <b>тест</b> - где надо написать правильный ответ.
+              Есть <b>тест</b> - надо написать правильный ответ.
             </Paragraph2>
             <Paragraph2>Выберите режим сложности</Paragraph2>
             <form onSubmit={handleSubmit}>
