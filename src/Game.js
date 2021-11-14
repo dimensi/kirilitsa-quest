@@ -7,10 +7,13 @@ import { ButtonGroup } from "baseui/button-group";
 import { Button } from "baseui/button";
 import { ArrowRight } from "baseui/icon";
 import { useQuiz } from "./useQuiz";
-import {useEffect, useRef, useState} from "react";
-import {Input, StatefulInput} from "baseui/input";
+import { useEffect, useRef, useState } from "react";
+import { Input } from "baseui/input";
 
-export function Game({ gameMode: { totalQuestions, time, inputMode }, onDone }) {
+export function Game({
+  gameMode: { totalQuestions, time, inputMode },
+  onDone,
+}) {
   const { result, setAnswer, question, skipQuestion } = useQuiz(questions, {
     totalQuestions,
   });
@@ -32,7 +35,7 @@ export function Game({ gameMode: { totalQuestions, time, inputMode }, onDone }) 
     };
   }, [skipQuestion, time]);
 
-  const [value, setValue] = useState('')
+  const [value, setValue] = useState("");
   return (
     <Block>
       <FlexGrid flexGridColumnCount={2} alignItems={"center"}>
@@ -63,47 +66,49 @@ export function Game({ gameMode: { totalQuestions, time, inputMode }, onDone }) 
           />
         </FlexGridItem>
       </FlexGrid>
-        {!inputMode && (
-            <ButtonGroup
-                overrides={{
-                    Root: {
-                        style: () => ({
-                            flexDirection: "column",
-                            maxWidth: "350px",
-                            rowGap: "10px",
-                        }),
-                    },
-                }}
+      {!inputMode && (
+        <ButtonGroup
+          overrides={{
+            Root: {
+              style: () => ({
+                flexDirection: "column",
+                maxWidth: "350px",
+                rowGap: "10px",
+              }),
+            },
+          }}
+        >
+          {question.variants.map((variant) => (
+            <Button
+              key={variant}
+              startEnhancer={() => <ArrowRight size={24} />}
+              onClick={() => setAnswer(variant)}
+              overrides={{
+                BaseButton: {
+                  style: () => ({ justifyContent: "flex-start" }),
+                },
+              }}
             >
-                {question.variants.map((variant) => (
-                    <Button
-                        key={variant}
-                        startEnhancer={() => <ArrowRight size={24} />}
-                        onClick={() => setAnswer(variant)}
-                        overrides={{
-                            BaseButton: {
-                                style: () => ({ justifyContent: "flex-start" }),
-                            },
-                        }}
-                    >
-                        {variant}
-                    </Button>
-                ))}
-            </ButtonGroup>
-        )}
+              {variant}
+            </Button>
+          ))}
+        </ButtonGroup>
+      )}
       {inputMode && (
-          <form onSubmit={(e) => {
+        <form
+          onSubmit={(e) => {
             e.preventDefault();
-            setAnswer(value)
-            setValue('')
-          }}>
-            <Input
-                value={value}
-                onChange={e => setValue(e.target.value)}
-                placeholder="Введите ответ на translite"
-                clearOnEscape
-            />
-          </form>
+            setAnswer(value);
+            setValue("");
+          }}
+        >
+          <Input
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            placeholder="Введите ответ на translite"
+            clearOnEscape
+          />
+        </form>
       )}
     </Block>
   );
