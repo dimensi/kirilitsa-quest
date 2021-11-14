@@ -1,99 +1,110 @@
-import {useMemo, useState} from "react";
-import {questions} from "./questions";
-import {shuffle} from "lodash";
-import {useList} from "react-use";
-import {RadialProgress} from "react-radial-progress-indicator";
-import {Block} from "baseui/block";
-import {Paragraph1} from "baseui/typography";
-import {FlexGrid, FlexGridItem} from "baseui/flex-grid";
-import {ButtonGroup} from "baseui/button-group";
-import {Button} from "baseui/button";
-import {ArrowRight} from "baseui/icon";
+import { questions } from "./questions";
+import { RadialProgress } from "react-radial-progress-indicator";
+import { Block } from "baseui/block";
+import { Paragraph1 } from "baseui/typography";
+import { FlexGrid, FlexGridItem } from "baseui/flex-grid";
+import { ButtonGroup } from "baseui/button-group";
+import { Button } from "baseui/button";
+import { ArrowRight } from "baseui/icon";
+import { useQuiz } from "./useQuiz";
+import {useEffect, useRef, useState} from "react";
+import {Input, StatefulInput} from "baseui/input";
 
-const prepareAnswers = (questions, answers) =>
-  questions.map(({ question }, idx) => ({ question, answer: answers[idx] }));
+export function Game({ gameMode: { totalQuestions, time, inputMode }, onDone }) {
+  const { result, setAnswer, question, skipQuestion } = useQuiz(questions, {
+    totalQuestions,
+  });
 
-export function Game({ gameMode: { totalQuestions, time }, onDone }) {
-  const items = useMemo(
-    () =>
-      [questions[0]].concat(shuffle(questions.slice(1, totalQuestions))),
-    [totalQuestions]
-  );
-  const [currentIndex, setNextIndex] = useState(0);
-  const [answers, answersApi] = useList([]);
-  const currentQuestion = items[currentIndex]
-  const handleAnswer = (answer) => {
-    answersApi.push(answer);
-    if (currentIndex === totalQuestions - 1) {
-      onDone(prepareAnswers(items, answers.concat(answer)));
-    } else {
-      setNextIndex(prev => prev + 1);
+  useEffect(() => {
+    if (result) {
+      onDone(result);
     }
-  };
+  }, [onDone, result]);
 
-  const handleTimeout = (percentage) => {
-    if (percentage === 0) {
-      handleAnswer("");
-    }
-  };
+  const timer = useRef(null);
+  useEffect(() => {
+    timer.current = setTimeout(skipQuestion, time * 1e3);
+    return () => {
+      if (timer.current) {
+        clearTimeout(timer.current);
+        timer.current = null;
+      }
+    };
+  }, [skipQuestion, time]);
 
+  const [value, setValue] = useState('')
   return (
     <Block>
       <FlexGrid flexGridColumnCount={2} alignItems={"center"}>
         <FlexGridItem>
-          <Paragraph1>{currentQuestion.question} это —</Paragraph1>
+          <Paragraph1>{question.question} это —</Paragraph1>
         </FlexGridItem>
         <FlexGridItem justifyContent={"right"} display={"flex"}>
           <RadialProgress
-              key={currentQuestion.question}
-              backgroundColour="#dff0d8"
-              backgroundTransparent
-              duration={time * 1e3}
-              fontRatio={4}
-              height={50}
-              ringBgColour="#ccc"
-              ringFgColour="#666666"
-              ringIntermediateColour="#666666"
-              ringThickness={0.2}
-              segmented={false}
-              showIntermediateProgress
-              step={0}
-              steps={time}
-              startStep={time}
-              text={(steps, percentage) => {
-                handleTimeout(percentage);
-                return (Math.floor(steps * percentage * 10) / 10).toFixed(1);
-              }}
-              width={50}
+            key={question.question}
+            backgroundColour="#dff0d8"
+            backgroundTransparent
+            duration={time * 1e3}
+            fontRatio={4}
+            height={50}
+            ringBgColour="#ccc"
+            ringFgColour="#666666"
+            ringIntermediateColour="#666666"
+            ringThickness={0.2}
+            segmented={false}
+            showIntermediateProgress
+            step={0}
+            steps={time}
+            startStep={time}
+            text={(steps, percentage) =>
+              (Math.floor(steps * percentage * 10) / 10).toFixed(1)
+            }
+            width={50}
           />
         </FlexGridItem>
       </FlexGrid>
-      <ButtonGroup
-        overrides={{
-          Root: {
-            style: () => ({
-              flexDirection: "column",
-              maxWidth: "350px",
-              rowGap: "10px",
-            }),
-          },
-        }}
-      >
-        {currentQuestion.variants.map((variant) => (
-          <Button
-            key={variant}
-            startEnhancer={() => <ArrowRight size={24} />}
-            onClick={() => handleAnswer(variant)}
-            overrides={{
-              BaseButton: {
-                style: () => ({ justifyContent: "flex-start" }),
-              },
-            }}
-          >
-            {variant}
-          </Button>
-        ))}
-      </ButtonGroup>
+        {!inputMode && (
+            <ButtonGroup
+                overrides={{
+                    Root: {
+                        style: () => ({
+                            flexDirection: "column",
+                            maxWidth: "350px",
+                            rowGap: "10px",
+                        }),
+                    },
+                }}
+            >
+                {question.variants.map((variant) => (
+                    <Button
+                        key={variant}
+                        startEnhancer={() => <ArrowRight size={24} />}
+                        onClick={() => setAnswer(variant)}
+                        overrides={{
+                            BaseButton: {
+                                style: () => ({ justifyContent: "flex-start" }),
+                            },
+                        }}
+                    >
+                        {variant}
+                    </Button>
+                ))}
+            </ButtonGroup>
+        )}
+      {inputMode && (
+          <form onSubmit={(e) => {
+            e.preventDefault();
+            setAnswer(value)
+            setValue('')
+          }}>
+            <Input
+                value={value}
+                onChange={e => setValue(e.target.value)}
+                placeholder="Введите ответ на translite"
+                clearOnEscape
+            />
+          </form>
+      )}
     </Block>
   );
 }
