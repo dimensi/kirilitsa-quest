@@ -1,4 +1,3 @@
-import { questions } from "./questions";
 import { RadialProgress } from "react-radial-progress-indicator";
 import { Block } from "baseui/block";
 import { Paragraph1 } from "baseui/typography";
@@ -6,12 +5,13 @@ import { FlexGrid, FlexGridItem } from "baseui/flex-grid";
 import { ButtonGroup } from "baseui/button-group";
 import { Button } from "baseui/button";
 import { ArrowRight } from "baseui/icon";
-import { useQuiz } from "./useQuiz";
+import { useQuiz } from "../hooks/useQuiz";
 import { useEffect, useRef, useState } from "react";
 import { Input } from "baseui/input";
 
 export function Game({
   gameMode: { totalQuestions, time, inputMode },
+  questions,
   onDone,
 }) {
   const { result, setAnswer, question, skipQuestion } = useQuiz(questions, {

@@ -24,7 +24,6 @@ export function useQuiz(questions, { totalQuestions }) {
 
   const skipQuestion = () => setAnswer("");
 
-  console.log(index);
   return {
     question: items[index],
     skipQuestion,
